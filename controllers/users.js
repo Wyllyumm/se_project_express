@@ -3,10 +3,9 @@ const { error400, error404, error500 } = require("../utils/errors");
 
 const getUsers = (req, res) => {
   User.find({})
-    .orFail()
     .then((users) => res.status(200).send(users))
     .catch((err) => {
-      console.err(err);
+      console.error(err);
       return res.status(error500.status).send({ message: error500.message });
     });
 };
@@ -17,7 +16,7 @@ const createUser = (req, res) => {
   User.create({ name, avatar })
     .then((user) => res.status(201).send(user))
     .catch((err) => {
-      console.err(err);
+      console.error(err);
       if (err.name === "ValidationError") {
         return res.status(error400.status).send({ message: error400.message });
       }
@@ -34,8 +33,8 @@ const getUser = (req, res) => {
     .orFail()
     .then((user) => res.status(200).send(user))
     .catch((err) => {
-      console.err(err);
-      if (err.name === "ValidationError") {
+      console.error(err);
+      if (err.name === "CastError") {
         return res.status(error400.status).send({ message: error400.message });
       }
       if (err.name === "DocumentNotFoundError") {

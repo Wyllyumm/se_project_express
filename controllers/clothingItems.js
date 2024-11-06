@@ -6,14 +6,13 @@ const createItem = (req, res) => {
   console.log(req.body);
   console.log(req.user._id);
 
-  const { name, weather, imageURL } = req.body;
-  ClothingItem.create({ name, weather, imageURL, owner: req.user._id })
+  const { name, weather, imageUrl } = req.body;
+  ClothingItem.create({ name, weather, imageUrl, owner: req.user._id })
     .then((item) => {
-      console.log(item);
-      res.send({ data: item });
+      res.status(201).send({ data: item });
     })
     .catch((err) => {
-      console.err(err);
+      console.error(err);
       if (err.name === "ValidationError") {
         return res.status(error400.status).send({ message: error400.message });
       }
@@ -26,16 +25,15 @@ const createItem = (req, res) => {
 
 const getItems = (req, res) => {
   ClothingItem.find({})
-    .orFail()
     .then((items) => res.status(200).send(items))
     .catch((err) => {
-      console.err(err);
+      console.error(err);
       if (err.name === "ValidationError") {
         return res.status(error400.status).send({ message: error400.message });
       }
-      if (err.name === "DocumentNotFoundError") {
-        return res.status(error404.status).send({ message: error404.message });
-      }
+      // if (err.name === "DocumentNotFoundError") {
+      //  return res.status(error404.status).send({ message: error404.message });
+      //  }
       return res.status(error500.status).send({ message: error500.message });
     });
 };
@@ -52,7 +50,7 @@ const updateItemImage = (req, res) => {
       (item) => res.status(200).send({ data: item }) /*sends item back as data*/
     )
     .catch((err) => {
-      console.err(err);
+      console.error(err);
       if (err.name === "ValidationError") {
         return res.status(error400.status).send({ message: error400.message });
       }
@@ -69,10 +67,10 @@ const deleteItem = (req, res) => {
   console.log(itemId);
   ClothingItem.findByIdAndDelete(itemId)
     .orFail()
-    .then((item) => res.status(204).send({}))
+    .then((item) => res.status(200).send({}))
     .catch((err) => {
-      console.err(err);
-      if (err.name === "ValidationError") {
+      console.error(err);
+      if (err.name === "CastError") {
         return res.status(error400.status).send({ message: error400.message });
       }
       if (err.name === "DocumentNotFoundError") {
@@ -91,8 +89,8 @@ const likeItem = (req, res) => {
     .orFail()
     .then((item) => res.status(200).send({ data: item }))
     .catch((err) => {
-      console.err(err);
-      if (err.name === "ValidationError") {
+      console.error(err);
+      if (err.name === "CastError") {
         return res.status(error400.status).send({ message: error400.message });
       }
       if (err.name === "DocumentNotFoundError") {
@@ -113,8 +111,8 @@ const dislikeItem = (req, res) => {
       (item) => res.status(200).send({ data: item }) /*sends item back as data*/
     )
     .catch((err) => {
-      console.err(err);
-      if (err.name === "ValidationError") {
+      console.error(err);
+      if (err.name === "CastError") {
         return res.status(error400.status).send({ message: error400.message });
       }
       if (err.name === "DocumentNotFoundError") {
