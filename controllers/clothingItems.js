@@ -109,7 +109,8 @@ const dislikeItem = (req, res) => {
   )
     .orFail()
     .then(
-      (item) => res.status(200).send({ data: item }) /*sends item back as data*/
+      (item) =>
+        res.status(200).send({ data: item }) /* sends item back as data */
     )
     .catch((err) => {
       console.error(err);
