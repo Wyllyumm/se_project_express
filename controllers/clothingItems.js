@@ -39,15 +39,16 @@ const getItems = (req, res) => {
 };
 
 const updateItemImage = (req, res) => {
-  const { itemId } = req.params; /*params is part of url*/
-  const { imageURL } = req.body; /*body is part of the request body itself*/
+  const { itemId } = req.params; /* params is part of url */
+  const { imageURL } = req.body; /* body is part of the request body itself */
 
   ClothingItem.findByIdAndUpdate(itemId, {
     set: { imageURL },
-  }) /*"set" is mongoosedb specific*/
+  }) /* "set" is mongoosedb specific */
     .orFail()
     .then(
-      (item) => res.status(200).send({ data: item }) /*sends item back as data*/
+      (item) =>
+        res.status(200).send({ data: item }) /* sends item back as data */
     )
     .catch((err) => {
       console.error(err);
