@@ -38,17 +38,18 @@ const getItems = (req, res) => {
     });
 };
 
+/* code for updating item image
 const updateItemImage = (req, res) => {
-  const { itemId } = req.params; /* params is part of url */
-  const { imageURL } = req.body; /* body is part of the request body itself */
+  const { itemId } = req.params; /* params is part of url
+  const { imageURL } = req.body; /* body is part of the request body itself
 
   ClothingItem.findByIdAndUpdate(itemId, {
     set: { imageURL },
-  }) /* "set" is mongoosedb specific */
+  }) /* "set" is mongoosedb specific
     .orFail()
     .then(
       (item) =>
-        res.status(200).send({ data: item }) /* sends item back as data */
+        res.status(200).send({ data: item }) /* sends item back as data
     )
     .catch((err) => {
       console.error(err);
@@ -60,7 +61,7 @@ const updateItemImage = (req, res) => {
       }
       return res.status(error500.status).send({ message: error500.message });
     });
-};
+}; */
 
 const deleteItem = (req, res) => {
   const { itemId } = req.params;
@@ -68,7 +69,7 @@ const deleteItem = (req, res) => {
   console.log(itemId);
   ClothingItem.findByIdAndDelete(itemId)
     .orFail()
-    .then(() => res.status(200).send({}))
+    .then(() => res.status(200).send({ message: "Deletion successful" }))
     .catch((err) => {
       console.error(err);
       if (err.name === "CastError") {
@@ -127,7 +128,6 @@ const dislikeItem = (req, res) => {
 module.exports = {
   createItem,
   getItems,
-  updateItemImage,
   deleteItem,
   likeItem,
   dislikeItem,

@@ -20,9 +20,6 @@ const createUser = (req, res) => {
       if (err.name === "ValidationError") {
         return res.status(error400.status).send({ message: error400.message });
       }
-      if (err.name === "DocumentNotFoundError") {
-        return res.status(error404.status).send({ message: error404.message });
-      }
       return res.status(error500.status).send({ message: error500.message });
     });
 };
