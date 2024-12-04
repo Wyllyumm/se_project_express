@@ -1,5 +1,5 @@
 const ClothingItem = require("../models/clothingItem");
-const { error400, error404, error500 } = require("../utils/errors");
+const { error400, error404, error500, error403 } = require("../utils/errors");
 
 const createItem = (req, res) => {
   console.log(req);
@@ -67,9 +67,28 @@ const deleteItem = (req, res) => {
   const { itemId } = req.params;
 
   console.log(itemId);
-  ClothingItem.findByIdAndDelete(itemId)
+  ClothingItem.findOne({ _id: itemId })
+    /*ClothingItem.findByIdAndDelete(itemId)*/
     .orFail()
-    .then(() => res.status(200).send({ message: "Deletion successful" }))
+    .then((item) => {
+      if (!item.owner.equals(req.user._id)) {
+        return res.status(error403.status).send({ message: error403.message });
+      } else {
+        return (
+          item
+            /*.deleteOne({ _id: itemId })*/
+            .remove()
+            .orFail()
+            .then(() => res.status(200).send({ message: "Item Deleted" }))
+            .catch((err) => {
+              console.log(err);
+              return res
+                .status(error500.status)
+                .send({ message: error500.message });
+            })
+        );
+      }
+    })
     .catch((err) => {
       console.error(err);
       if (err.name === "CastError") {
@@ -89,7 +108,7 @@ const likeItem = (req, res) => {
     { new: true }
   )
     .orFail()
-    .then((item) => res.status(200).send({ data: item }))
+    .then((item) => res.status(200).send({ item }))
     .catch((err) => {
       console.error(err);
       if (err.name === "CastError") {
@@ -110,8 +129,7 @@ const dislikeItem = (req, res) => {
   )
     .orFail()
     .then(
-      (item) =>
-        res.status(200).send({ data: item }) /* sends item back as data */
+      (item) => res.status(200).send({ item }) /* sends item back as data */
     )
     .catch((err) => {
       console.error(err);
