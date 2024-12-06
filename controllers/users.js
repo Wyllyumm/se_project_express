@@ -11,15 +11,6 @@ const {
   error401,
 } = require("../utils/errors");
 
-/*const getUsers = (req, res) => {
-  User.find({})
-    .then((users) => res.status(200).send(users))
-    .catch((err) => {
-      console.error(err);
-      return res.status(error500.status).send({ message: error500.message });
-    });
-}; */
-
 const createUser = (req, res) => {
   const { name, avatar, email, password } = req.body;
   if (!email || !password) {
@@ -28,43 +19,47 @@ const createUser = (req, res) => {
       .send({ message: "Email and password are required" });
   }
 
-  User.findOne({ email }).then((existingUser) => {
+  return User.findOne({ email }).then((existingUser) => {
     if (existingUser) {
       return res.status(error409.status).send({ message: error409.message });
     }
-    /*}); */
 
-    return bcrypt.hash(password, 10).then((hash) =>
-      User.create({ name, avatar, email, password: hash })
-        .then((user) =>
-          res
-            .status(201)
-            .send({ name: user.name, avatar: user.avatar, email: user.email })
-        )
+    return bcrypt
+      .hash(password, 10)
+      .then((hash) =>
+        User.create({ name, avatar, email, password: hash })
+          .then((user) =>
+            res
+              .status(201)
+              .send({ name: user.name, avatar: user.avatar, email: user.email })
+          )
 
-        .catch((err) => {
-          console.error(err);
-          if (err.statuscode === 11000) {
+          .catch((err) => {
+            console.error(err);
+            if (err.statuscode === 11000) {
+              return res
+                .status(error409.status)
+                .send({ message: error409.message });
+            }
+            if (err.name === "ValidationError") {
+              return res
+                .status(error400.status)
+                .send({ message: error400.message });
+            }
             return res
-              .status(error409.status)
-              .send({ message: error409.message });
-          }
-          if (err.name === "ValidationError") {
-            return res
-              .status(error400.status)
-              .send({ message: error400.message });
-          }
-          return res
-            .status(error500.status)
-            .send({ message: error500.message });
-        })
-    );
+              .status(error500.status)
+              .send({ message: error500.message });
+          })
+      )
+      .catch((err) => {
+        console.error(err);
+        return res.status(error500.status).send({ message: error500.message });
+      });
   });
 };
 
 //* getUser from previous sprint *//
 const getCurrentUser = (req, res) => {
-  /*const { userId } = req.user._id;*/
   User.findById(req.user._id)
     .orFail()
     .then((user) => res.status(200).send(user))
@@ -94,10 +89,7 @@ const login = (req, res) => {
     })
     .catch((err) => {
       console.error(err);
-      if (
-        err.message.includes("Incorrect email") ||
-        err.message.includes("Incorrect password")
-      ) {
+      if (err.message.includes({ message: "Incorrect email or password" })) {
         return res.status(error401.status).send({ message: error401.message });
       }
       return res.status(error500.status).send({ message: error500.message });
@@ -116,11 +108,8 @@ const updateProfile = (req, res) => {
     .then(() => res.status(200).send({ name, avatar }))
     .catch((err) => {
       console.error(err);
-      if (err.name === "CastError") {
+      if (err.name === "ValidationError") {
         return res.status(error400.status).send({ message: error400.message });
-      }
-      if (err.name === "DocumentNotFoundError") {
-        return res.status(error404.status).send({ message: error404.message });
       }
       return res.status(error500.status).send({ message: error500.message });
     });

@@ -14,8 +14,6 @@ const auth = (req, res, next) => {
 
   try {
     payload = jwt.verify(token, JWT_SECRET);
-    /*req.user = payload;
-    return next(); */
   } catch (err) {
     return res.status(error401.status).send({ message: error401.message });
   }

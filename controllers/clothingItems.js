@@ -28,13 +28,9 @@ const getItems = (req, res) => {
     .then((items) => res.status(200).send(items))
     .catch((err) => {
       console.error(err);
-      if (err.name === "ValidationError") {
-        return res.status(error400.status).send({ message: error400.message });
-      }
-      // if (err.name === "DocumentNotFoundError") {
-      //  return res.status(error404.status).send({ message: error404.message });
-      //  }
+
       return res.status(error500.status).send({ message: error500.message });
+      /* the only error that would occur */
     });
 };
 
@@ -68,26 +64,20 @@ const deleteItem = (req, res) => {
 
   console.log(itemId);
   ClothingItem.findOne({ _id: itemId })
-    /*ClothingItem.findByIdAndDelete(itemId)*/
     .orFail()
     .then((item) => {
       if (!item.owner.equals(req.user._id)) {
         return res.status(error403.status).send({ message: error403.message });
-      } else {
-        return (
-          item
-            /*.deleteOne({ _id: itemId })*/
-            .remove()
-            .orFail()
-            .then(() => res.status(200).send({ message: "Item Deleted" }))
-            .catch((err) => {
-              console.log(err);
-              return res
-                .status(error500.status)
-                .send({ message: error500.message });
-            })
-        );
       }
+      return item
+        .remove()
+        .then(() => res.status(200).send({ message: "Item Deleted" }))
+        .catch((err) => {
+          console.log(err);
+          return res
+            .status(error500.status)
+            .send({ message: error500.message });
+        });
     })
     .catch((err) => {
       console.error(err);
