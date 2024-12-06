@@ -89,7 +89,7 @@ const login = (req, res) => {
     })
     .catch((err) => {
       console.error(err);
-      if (err.message.includes({ message: "Incorrect email or password" })) {
+      if (err.message.includes("Incorrect email or password")) {
         return res.status(error401.status).send({ message: error401.message });
       }
       return res.status(error500.status).send({ message: error500.message });
