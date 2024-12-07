@@ -73,7 +73,7 @@ const deleteItem = (req, res) => {
         .remove()
         .then(() => res.status(200).send({ message: "Item Deleted" }))
         .catch((err) => {
-          console.log(err);
+          console.error(err);
           return res
             .status(error500.status)
             .send({ message: error500.message });
