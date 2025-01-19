@@ -1,5 +1,7 @@
 const ClothingItem = require("../models/clothingItem");
 const { error400, error404, error500, error403 } = require("../utils/errors");
+const ForbiddenError = require("../errors/forbiddenError");
+const { handleRepeatErrors } = require("../middlewares/error-handler");
 
 const createItem = (req, res) => {
   console.log(req);
@@ -13,13 +15,14 @@ const createItem = (req, res) => {
     })
     .catch((err) => {
       console.error(err);
-      if (err.name === "ValidationError") {
+      handleRepeatErrors(err, res, next);
+      /*if (err.name === "ValidationError") {
         return res.status(error400.status).send({ message: error400.message });
       }
       if (err.name === "DocumentNotFoundError") {
         return res.status(error404.status).send({ message: error404.message });
       }
-      return res.status(error500.status).send({ message: error500.message });
+      return res.status(error500.status).send({ message: error500.message }); */
     });
 };
 
@@ -67,7 +70,10 @@ const deleteItem = (req, res) => {
     .orFail()
     .then((item) => {
       if (!item.owner.equals(req.user._id)) {
-        return res.status(error403.status).send({ message: error403.message });
+        /*return res.status(error403.status).send({ message: error403.message }); */
+        throw new ForbiddenError(
+          "Forbidden - you don't have permission to access this resource"
+        );
       }
       return item
         .remove()
@@ -81,13 +87,14 @@ const deleteItem = (req, res) => {
     })
     .catch((err) => {
       console.error(err);
-      if (err.name === "CastError") {
+      handleRepeatErrors(err, res, next);
+      /*if (err.name === "CastError") {
         return res.status(error400.status).send({ message: error400.message });
       }
       if (err.name === "DocumentNotFoundError") {
         return res.status(error404.status).send({ message: error404.message });
       }
-      return res.status(error500.status).send({ message: error500.message });
+      return res.status(error500.status).send({ message: error500.message }); */
     });
 };
 
@@ -101,13 +108,14 @@ const likeItem = (req, res) => {
     .then((item) => res.status(200).send({ item }))
     .catch((err) => {
       console.error(err);
-      if (err.name === "CastError") {
+      handleRepeatErrors(err, res, next);
+      /*if (err.name === "CastError") {
         return res.status(error400.status).send({ message: error400.message });
       }
       if (err.name === "DocumentNotFoundError") {
         return res.status(error404.status).send({ message: error404.message });
       }
-      return res.status(error500.status).send({ message: error500.message });
+      return res.status(error500.status).send({ message: error500.message }); */
     });
 };
 
@@ -123,13 +131,14 @@ const dislikeItem = (req, res) => {
     )
     .catch((err) => {
       console.error(err);
-      if (err.name === "CastError") {
+      handleRepeatErrors(err, res, next);
+      /*if (err.name === "CastError") {
         return res.status(error400.status).send({ message: error400.message });
       }
       if (err.name === "DocumentNotFoundError") {
         return res.status(error404.status).send({ message: error404.message });
       }
-      return res.status(error500.status).send({ message: error500.message });
+      return res.status(error500.status).send({ message: error500.message }); */
     });
 };
 
