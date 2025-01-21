@@ -63,10 +63,10 @@ const updateItemImage = (req, res) => {
 }; */
 
 const deleteItem = (req, res) => {
-  const { itemId } = req.params;
+  const { itemId } = req.params._id;
 
   console.log(itemId);
-  ClothingItem.findOne({ _id: itemId })
+  ClothingItem.findOne({ itemId })
     .orFail()
     .then((item) => {
       if (!item.owner.equals(req.user._id)) {
