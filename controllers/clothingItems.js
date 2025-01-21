@@ -76,7 +76,7 @@ const deleteItem = (req, res) => {
         );
       }
       return item
-        .remove({ _id: itemId })
+        .remove()
         .then(() => res.status(200).send({ message: "Item Deleted" }))
         .catch((err) => {
           console.error(err);
