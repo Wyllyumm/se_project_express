@@ -8,7 +8,7 @@ function errorHandler(err, req, res, next) {
   console.error(err);
   const { statusCode = 500 } = err;
   const message = err.message || "An error has occured on the server";
-  res.status(statusCode).send(message);
+  res.status(statusCode).send({ message });
 }
 
 function handleRepeatErrors(err, res, next) {
