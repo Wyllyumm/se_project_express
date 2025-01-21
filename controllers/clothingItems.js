@@ -63,10 +63,10 @@ const updateItemImage = (req, res) => {
 }; */
 
 const deleteItem = (req, res) => {
-  const { itemId } = req.params.itemId;
-
+  const { itemId } = req.params;
+  /* const { _id: userId } = req.user; */
   console.log(itemId);
-  ClothingItem.findOne(itemId)
+  ClothingItem.findOne({ _id: itemId })
     .orFail()
     .then((item) => {
       if (!item.owner.equals(req.user._id)) {
@@ -76,7 +76,7 @@ const deleteItem = (req, res) => {
         );
       }
       return item
-        .remove()
+        .remove({ _id: itemId })
         .then(() => res.status(200).send({ message: "Item Deleted" }))
         .catch((err) => {
           console.error(err);
