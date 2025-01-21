@@ -24,6 +24,9 @@ function handleRepeatErrors(err, res, next) {
   if (err.name === "ForbiddenError") {
     return next(new ForbiddenError(err.message));
   }
+  if (err.message.includes("Incorrect email or password")) {
+    return next(new UnauthorizedError(err.message));
+  }
   next(err);
 }
 
