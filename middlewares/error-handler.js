@@ -13,19 +13,19 @@ function errorHandler(err, req, res, next) {
 
 function handleRepeatErrors(err, res, next) {
   if (err.code === 11000) {
-    return next(new ConflictError(err.message));
+    next(new ConflictError(err.message));
   }
   if (err.name === "ValidationError" || err.name === "CastError") {
-    return next(new BadRequestError(err.message));
+    next(new BadRequestError(err.message));
   }
   if (err.name === "DocumentNotFoundError") {
-    return next(new NotFoundError(err.message));
+    next(new NotFoundError(err.message));
   }
   if (err.name === "ForbiddenError") {
-    return next(new ForbiddenError(err.message));
+    next(new ForbiddenError(err.message));
   }
   if (err.message.includes("Incorrect email or password")) {
-    return next(new UnauthorizedError(err.message));
+    next(new UnauthorizedError(err.message));
   }
   next(err);
 }
