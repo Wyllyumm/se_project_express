@@ -14,7 +14,7 @@ const BadRequestError = require("../errors/badRequestError");
 const ConflictError = require("../errors/conflictError");
 const { handleRepeatErrors } = require("../middlewares/error-handler");
 
-const createUser = (req, res) => {
+const createUser = (req, res, next) => {
   const { name, avatar, email, password } = req.body;
   if (!email || !password) {
     throw new BadRequestError("Email and password are required");
@@ -25,18 +25,20 @@ const createUser = (req, res) => {
       throw new ConflictError("Email already exists");
     }
 
-    return bcrypt.hash(password, 10).then((hash) =>
-      User.create({ name, avatar, email, password: hash })
-        .then((user) =>
-          res
-            .status(201)
-            .send({ name: user.name, avatar: user.avatar, email: user.email })
-        )
+    return bcrypt
+      .hash(password, 10)
+      .then((hash) =>
+        User.create({ name, avatar, email, password: hash })
+          .then((user) =>
+            res
+              .status(201)
+              .send({ name: user.name, avatar: user.avatar, email: user.email })
+          )
 
-        .catch((err) => {
-          console.error(err);
-          handleRepeatErrors(err, res, next);
-          /* if (err.statuscode === 11000) {
+          .catch((err) => {
+            console.error(err);
+            handleRepeatErrors(err, res, next);
+            /* if (err.statuscode === 11000) {
               return res
                 .status(error409.status)
                 .send({ message: error409.message });
@@ -49,12 +51,12 @@ const createUser = (req, res) => {
             return res
               .status(error500.status)
               .send({ message: error500.message }); */
-        })
-    );
-    /*.catch((err) => {
+          })
+      )
+      .catch((err) => {
         console.error(err);
-        return res.status(error500.status).send({ message: error500.message });
-      }); */
+        handleRepeatErrors(err, res, next);
+      });
   });
 };
 
