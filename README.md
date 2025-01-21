@@ -12,6 +12,7 @@ Features:
 - Now with the subdomains registered and the frontend deployed, we are able to utilize nginx to work with the frontend so that when users send in requests such as registering to the website, logging in, adding clothing items, etc from the frontend server, this being www.idk-wtwr.mindhackers.org(with/without "wwww"), are sent to the backend server (api.idk-wtwr.mindhackers).
 - From the home page users will be able to see the current date, weather, and a section of clothes filtered based on the type of weather they may be experiencing.
 - Once Logged in, users will be able to like/dislike/delete their own items, and even add clothing items that they feel will be fitting for the current weather.
+- Videos showcase some website features:
 https://drive.google.com/file/d/1JfxFVMsN-OCvPOr3XPzWZcGt6S-zo1dN/view?usp=sharing
 https://drive.google.com/file/d/1dKwhrdLmaIP-rOJg-ZHbCcw5Be11CatZ/view?usp=sharing
 https://drive.google.com/file/d/1Liq4EC8rtVV3GbLIkKBmR7AShqlLalED/view?usp=sharing
