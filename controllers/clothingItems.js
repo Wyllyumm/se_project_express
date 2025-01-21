@@ -63,7 +63,7 @@ const updateItemImage = (req, res) => {
 }; */
 
 const deleteItem = (req, res) => {
-  const { itemId } = req.params;
+  const { itemId } = req.params.itemId;
 
   console.log(itemId);
   ClothingItem.findOne(itemId)
