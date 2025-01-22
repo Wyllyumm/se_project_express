@@ -12,10 +12,7 @@ const {
 } = require("../utils/errors");
 const BadRequestError = require("../errors/badRequestError");
 const ConflictError = require("../errors/conflictError");
-const {
-  handleRepeatErrors,
-  errorHandler,
-} = require("../middlewares/error-handler");
+const { handleRepeatErrors } = require("../middlewares/error-handler");
 
 const createUser = (req, res, next) => {
   const { name, avatar, email, password } = req.body;
@@ -73,7 +70,7 @@ const createUser = (req, res, next) => {
 };
 
 //* getUser from previous sprint *//
-const getCurrentUser = (req, res) => {
+const getCurrentUser = (req, res, next) => {
   User.findById(req.user._id)
     .orFail()
     .then((user) => res.status(200).send(user))
@@ -90,7 +87,7 @@ const getCurrentUser = (req, res) => {
     });
 };
 
-const login = (req, res) => {
+const login = (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password) {
     /*return res.status(error400.status).send({ message: error400.message }); */
@@ -117,7 +114,7 @@ const login = (req, res) => {
     });
 };
 
-const updateProfile = (req, res) => {
+const updateProfile = (req, res, next) => {
   const { name, avatar } = req.body;
 
   User.findByIdAndUpdate(
