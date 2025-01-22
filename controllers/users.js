@@ -12,7 +12,10 @@ const {
 } = require("../utils/errors");
 const BadRequestError = require("../errors/badRequestError");
 const ConflictError = require("../errors/conflictError");
-const { handleRepeatErrors } = require("../middlewares/error-handler");
+const {
+  handleRepeatErrors,
+  errorHandler,
+} = require("../middlewares/error-handler");
 
 const createUser = (req, res, next) => {
   const { name, avatar, email, password } = req.body;
@@ -31,13 +34,11 @@ const createUser = (req, res, next) => {
         .then((hash) =>
           User.create({ name, avatar, email, password: hash })
             .then((user) =>
-              res
-                .status(201)
-                .send({
-                  name: user.name,
-                  avatar: user.avatar,
-                  email: user.email,
-                })
+              res.status(201).send({
+                name: user.name,
+                avatar: user.avatar,
+                email: user.email,
+              })
             )
 
             .catch((err) => {
@@ -108,6 +109,10 @@ const login = (req, res) => {
         return res.status(error401.status).send({ message: error401.message });
       }
       return res.status(error500.status).send({ message: error500.message }); */
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(error500.status).send({ message: error500.message });
     });
 };
 
@@ -130,6 +135,10 @@ const updateProfile = (req, res) => {
         return res.status(error400.status).send({ message: error400.message });
       }
       return res.status(error500.status).send({ message: error500.message }); */
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(error500.status).send({ message: error500.message });
     });
 };
 
