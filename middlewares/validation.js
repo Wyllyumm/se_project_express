@@ -77,6 +77,7 @@ const validateItemId = celebrate({
   params: Joi.object()
     .keys({
       itemId: Joi.string().hex().length(24),
+      _id: Joi.string().hex().length(24),
     })
     .unknown(true),
 });
