@@ -105,15 +105,15 @@ const login = (req, res) => {
     })
     .catch((err) => {
       console.error(err);
+      return res.status(error500.status).send({ message: error500.message });
+    })
+    .catch((err) => {
+      console.error(err);
       handleRepeatErrors(err, res, next);
       /*if (err.message.includes("Incorrect email or password")) {
         return res.status(error401.status).send({ message: error401.message });
       }
       return res.status(error500.status).send({ message: error500.message }); */
-    })
-    .catch((err) => {
-      console.error(err);
-      return res.status(error500.status).send({ message: error500.message });
     });
 };
 
