@@ -89,10 +89,10 @@ const deleteItem = (req, res, next) => {
             .send({ message: error500.message });
         });
     })
-    .catch((err) => {
-      console.error(err);
-      return res.status(error500.status).send({ message: error500.message });
-    })
+    // .catch((err) => {
+    //   console.error(err);
+    //   return res.status(error500.status).send({ message: error500.message });
+    // })
     .catch((err) => {
       console.error(err);
       handleRepeatErrors(err, res, next);
