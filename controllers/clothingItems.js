@@ -15,6 +15,10 @@ const createItem = (req, res) => {
     })
     .catch((err) => {
       console.error(err);
+      return res.status(error500.status).send({ message: error500.message });
+    })
+    .catch((err) => {
+      console.error(err);
       handleRepeatErrors(err, res, next);
       /* if (err.name === "ValidationError") {
         return res.status(error400.status).send({ message: error400.message });
@@ -23,10 +27,6 @@ const createItem = (req, res) => {
         return res.status(error404.status).send({ message: error404.message });
       }
       return res.status(error500.status).send({ message: error500.message }); */
-    })
-    .catch((err) => {
-      console.error(err);
-      return res.status(error500.status).send({ message: error500.message });
     });
 };
 
@@ -91,6 +91,10 @@ const deleteItem = (req, res) => {
     })
     .catch((err) => {
       console.error(err);
+      return res.status(error500.status).send({ message: error500.message });
+    })
+    .catch((err) => {
+      console.error(err);
       handleRepeatErrors(err, res, next);
       /* if (err.name === "CastError") {
         return res.status(error400.status).send({ message: error400.message });
@@ -99,10 +103,6 @@ const deleteItem = (req, res) => {
         return res.status(error404.status).send({ message: error404.message });
       }
       return res.status(error500.status).send({ message: error500.message }); */
-    })
-    .catch((err) => {
-      console.error(err);
-      return res.status(error500.status).send({ message: error500.message });
     });
 };
 
@@ -116,6 +116,10 @@ const likeItem = (req, res) => {
     .then((item) => res.status(200).send({ item }))
     .catch((err) => {
       console.error(err);
+      return res.status(error500.status).send({ message: error500.message });
+    })
+    .catch((err) => {
+      console.error(err);
       handleRepeatErrors(err, res, next);
       /*if (err.name === "CastError") {
         return res.status(error400.status).send({ message: error400.message });
@@ -124,10 +128,6 @@ const likeItem = (req, res) => {
         return res.status(error404.status).send({ message: error404.message });
       }
       return res.status(error500.status).send({ message: error500.message }); */
-    })
-    .catch((err) => {
-      console.error(err);
-      return res.status(error500.status).send({ message: error500.message });
     });
 };
 
@@ -143,6 +143,10 @@ const dislikeItem = (req, res) => {
     )
     .catch((err) => {
       console.error(err);
+      return res.status(error500.status).send({ message: error500.message });
+    })
+    .catch((err) => {
+      console.error(err);
       handleRepeatErrors(err, res, next);
       /*if (err.name === "CastError") {
         return res.status(error400.status).send({ message: error400.message });
@@ -151,10 +155,6 @@ const dislikeItem = (req, res) => {
         return res.status(error404.status).send({ message: error404.message });
       }
       return res.status(error500.status).send({ message: error500.message }); */
-    })
-    .catch((err) => {
-      console.error(err);
-      return res.status(error500.status).send({ message: error500.message });
     });
 };
 

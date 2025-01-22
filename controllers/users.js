@@ -131,15 +131,15 @@ const updateProfile = (req, res) => {
     })
     .catch((err) => {
       console.error(err);
+      return res.status(error500.status).send({ message: error500.message });
+    })
+    .catch((err) => {
+      console.error(err);
       handleRepeatErrors(err, res, next);
       /* if (err.name === "ValidationError") {
         return res.status(error400.status).send({ message: error400.message });
       }
       return res.status(error500.status).send({ message: error500.message }); */
-    })
-    .catch((err) => {
-      console.error(err);
-      return res.status(error500.status).send({ message: error500.message });
     });
 };
 
