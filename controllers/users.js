@@ -35,19 +35,6 @@ const createUser = (req, res, next) => {
             .catch((err) => {
               console.error(err);
               handleRepeatErrors(err, res, next);
-              /* if (err.statuscode === 11000) {
-              return res
-                .status(error409.status)
-                .send({ message: error409.message });
-            }
-            if (err.name === "ValidationError") {
-              return res
-                .status(error400.status)
-                .send({ message: error400.message });
-            }
-            return res
-              .status(error500.status)
-              .send({ message: error500.message }); */
             })
         )
         .catch((err) => {
@@ -71,43 +58,26 @@ const getCurrentUser = (req, res, next) => {
     .catch((err) => {
       console.error(err);
       handleRepeatErrors(err, res, next);
-      /* if (err.name === "CastError") {
-        return res.status(error400.status).send({ message: error400.message });
-      }
-      if (err.name === "DocumentNotFoundError") {
-        return res.status(error404.status).send({ message: error404.message });
-      }
-      return res.status(error500.status).send({ message: error500.message }); */
     });
 };
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    /* return res.status(error400.status).send({ message: error400.message }); */
     throw new BadRequestError("Invalid data.");
   }
-  return (
-    User.findUserByCredentials(email, password)
-      .then((user) => {
-        const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
-          expiresIn: "7d",
-        });
-        return res.send({ token });
-      })
-      /* .catch((err) => {
+  return User.findUserByCredentials(email, password)
+    .then((user) => {
+      const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
+        expiresIn: "7d",
+      });
+      return res.send({ token });
+    })
+
+    .catch((err) => {
       console.error(err);
-      return res.status(error500.status).send({ message: error500.message });
-    }) */
-      .catch((err) => {
-        console.error(err);
-        handleRepeatErrors(err, res, next);
-        /* if (err.message.includes("Incorrect email or password")) {
-        return res.status(error401.status).send({ message: error401.message });
-      }
-      return res.status(error500.status).send({ message: error500.message }); */
-      })
-  );
+      handleRepeatErrors(err, res, next);
+    });
 };
 
 const updateProfile = (req, res, next) => {
@@ -129,10 +99,6 @@ const updateProfile = (req, res, next) => {
     .catch((err) => {
       console.error(err);
       handleRepeatErrors(err, res, next);
-      /* if (err.name === "ValidationError") {
-        return res.status(error400.status).send({ message: error400.message });
-      }
-      return res.status(error500.status).send({ message: error500.message }); */
     });
 };
 
