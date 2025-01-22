@@ -114,10 +114,10 @@ const likeItem = (req, res, next) => {
   )
     .orFail()
     .then((item) => res.status(200).send({ item }))
-    .catch((err) => {
+    /*.catch((err) => {
       console.error(err);
       return res.status(error500.status).send({ message: error500.message });
-    })
+    }) */
     .catch((err) => {
       console.error(err);
       handleRepeatErrors(err, res, next);
@@ -141,10 +141,10 @@ const dislikeItem = (req, res, next) => {
     .then(
       (item) => res.status(200).send({ item }) /* sends item back as data */
     )
-    .catch((err) => {
+    /*.catch((err) => {
       console.error(err);
       return res.status(error500.status).send({ message: error500.message });
-    })
+    }) */
     .catch((err) => {
       console.error(err);
       handleRepeatErrors(err, res, next);
