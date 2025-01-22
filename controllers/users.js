@@ -93,7 +93,8 @@ const getCurrentUser = (req, res) => {
 const login = (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    return res.status(error400.status).send({ message: error400.message });
+    /*return res.status(error400.status).send({ message: error400.message }); */
+    throw new BadRequestError("Invalid data.");
   }
   return User.findUserByCredentials(email, password)
     .then((user) => {
