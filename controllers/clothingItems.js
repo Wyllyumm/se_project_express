@@ -23,6 +23,10 @@ const createItem = (req, res) => {
         return res.status(error404.status).send({ message: error404.message });
       }
       return res.status(error500.status).send({ message: error500.message }); */
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(error500.status).send({ message: error500.message });
     });
 };
 
@@ -95,6 +99,10 @@ const deleteItem = (req, res) => {
         return res.status(error404.status).send({ message: error404.message });
       }
       return res.status(error500.status).send({ message: error500.message }); */
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(error500.status).send({ message: error500.message });
     });
 };
 
@@ -116,6 +124,10 @@ const likeItem = (req, res) => {
         return res.status(error404.status).send({ message: error404.message });
       }
       return res.status(error500.status).send({ message: error500.message }); */
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(error500.status).send({ message: error500.message });
     });
 };
 
@@ -139,6 +151,10 @@ const dislikeItem = (req, res) => {
         return res.status(error404.status).send({ message: error404.message });
       }
       return res.status(error500.status).send({ message: error500.message }); */
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(error500.status).send({ message: error500.message });
     });
 };
 
