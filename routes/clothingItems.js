@@ -15,8 +15,8 @@ const {
 
 router.get("/", getItems);
 router.post("/", validateCreateClothingItem, auth, createItem);
-router.delete("/:itemId", validateItemId, auth, deleteItem);
-router.put("/:itemId/likes", validateItemId, auth, likeItem);
-router.delete("/:itemId/likes", validateItemId, auth, dislikeItem);
+router.delete("/:itemId", validateItemId, validateId, auth, deleteItem);
+router.put("/:itemId/likes", validateItemId, validateId, auth, likeItem);
+router.delete("/:itemId/likes", validateItemId, validateId, auth, dislikeItem);
 
 module.exports = router;
