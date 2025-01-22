@@ -1,9 +1,9 @@
 const ClothingItem = require("../models/clothingItem");
-const { error400, error404, error500, error403 } = require("../utils/errors");
+const { error500 } = require("../utils/errors");
 const ForbiddenError = require("../errors/forbiddenError");
 const { handleRepeatErrors } = require("../middlewares/error-handler");
 
-const createItem = (req, res) => {
+const createItem = (req, res, next) => {
   console.log(req);
   console.log(req.body);
   console.log(req.user._id);
@@ -74,7 +74,7 @@ const deleteItem = (req, res, next) => {
     .orFail()
     .then((item) => {
       if (!item.owner.equals(req.user._id)) {
-        /*return res.status(error403.status).send({ message: error403.message }); */
+        /* return res.status(error403.status).send({ message: error403.message }); */
         throw new ForbiddenError(
           "Forbidden - you don't have permission to access this resource"
         );
@@ -114,14 +114,14 @@ const likeItem = (req, res, next) => {
   )
     .orFail()
     .then((item) => res.status(200).send({ item }))
-    /*.catch((err) => {
+    /* .catch((err) => {
       console.error(err);
       return res.status(error500.status).send({ message: error500.message });
     }) */
     .catch((err) => {
       console.error(err);
       handleRepeatErrors(err, res, next);
-      /*if (err.name === "CastError") {
+      /* if (err.name === "CastError") {
         return res.status(error400.status).send({ message: error400.message });
       }
       if (err.name === "DocumentNotFoundError") {
@@ -141,14 +141,14 @@ const dislikeItem = (req, res, next) => {
     .then(
       (item) => res.status(200).send({ item }) /* sends item back as data */
     )
-    /*.catch((err) => {
+    /* .catch((err) => {
       console.error(err);
       return res.status(error500.status).send({ message: error500.message });
     }) */
     .catch((err) => {
       console.error(err);
       handleRepeatErrors(err, res, next);
-      /*if (err.name === "CastError") {
+      /* if (err.name === "CastError") {
         return res.status(error400.status).send({ message: error400.message });
       }
       if (err.name === "DocumentNotFoundError") {

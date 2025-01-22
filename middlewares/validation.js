@@ -29,7 +29,7 @@ const validateCreateClothingItem = celebrate({
     }),
     weather: Joi.string()
       .required()
-      .messages({ "string.empty": 'The "name" field must be filled in' }),
+      .messages({ "string.empty": 'The "weather" field must be filled in' }),
   }),
 });
 
@@ -41,12 +41,12 @@ const validateUserSignup = celebrate({
       "string.empty": 'The "name" field must be filled in',
     }),
     password: Joi.string().required().min(8).messages({
-      "string.min": 'The minimum length of the "name" field is 8',
-      "string.empty": 'The "name" field must be filled in',
+      "string.min": 'The minimum length of the "password" field is 8',
+      "string.empty": 'The "password" field must be filled in',
     }),
     email: Joi.string().required().custom(validateEmail).messages({
-      "string.empty": 'The "imageUrl" field must be filled in',
-      "string.empty": 'The "name" field must be filled in',
+      "string.empty": 'The "email" field must be filled in',
+      "string.email": 'The "email" field must be a valid email',
     }),
     avatar: Joi.string().required().custom(validateURL).messages({
       "string.empty": 'The "imageUrl" field must be filled in',
@@ -58,11 +58,12 @@ const validateUserSignup = celebrate({
 const validateUserLogin = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().custom(validateEmail).messages({
-      "string.empty": 'The "imageUrl" field must be filled in',
+      "string.empty": 'The "email" field must be filled in',
+      "string.email": 'The "email" field must be a valid email',
     }),
     password: Joi.string().required().min(8).messages({
       "string.min": 'The minimum length of the "name" field is 8',
-      "string.empty": 'The "name" field must be filled in',
+      "string.empty": 'The "password" field must be filled in',
     }),
   }),
 });

@@ -3,13 +3,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const { JWT_SECRET } = require("../utils/config");
 
-const {
-  error400,
-  error404,
-  error500,
-  error409,
-  error401,
-} = require("../utils/errors");
+const { error500 } = require("../utils/errors");
 const BadRequestError = require("../errors/badRequestError");
 const ConflictError = require("../errors/conflictError");
 const { handleRepeatErrors } = require("../middlewares/error-handler");
@@ -77,7 +71,7 @@ const getCurrentUser = (req, res, next) => {
     .catch((err) => {
       console.error(err);
       handleRepeatErrors(err, res, next);
-      /*if (err.name === "CastError") {
+      /* if (err.name === "CastError") {
         return res.status(error400.status).send({ message: error400.message });
       }
       if (err.name === "DocumentNotFoundError") {
@@ -90,7 +84,7 @@ const getCurrentUser = (req, res, next) => {
 const login = (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    /*return res.status(error400.status).send({ message: error400.message }); */
+    /* return res.status(error400.status).send({ message: error400.message }); */
     throw new BadRequestError("Invalid data.");
   }
   return (
@@ -108,7 +102,7 @@ const login = (req, res, next) => {
       .catch((err) => {
         console.error(err);
         handleRepeatErrors(err, res, next);
-        /*if (err.message.includes("Incorrect email or password")) {
+        /* if (err.message.includes("Incorrect email or password")) {
         return res.status(error401.status).send({ message: error401.message });
       }
       return res.status(error500.status).send({ message: error500.message }); */

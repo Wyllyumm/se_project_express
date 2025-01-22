@@ -4,7 +4,7 @@ const ForbiddenError = require("../errors/forbiddenError");
 const NotFoundError = require("../errors/notFoundError");
 const UnauthorizedError = require("../errors/unauthorizedError");
 
-function errorHandler(err, req, res, next) {
+function errorHandler(err, req, res) {
   console.error(err);
   const { statusCode = 500 } = err;
   const message = err.message || "An error has occured on the server";
