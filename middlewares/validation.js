@@ -68,16 +68,16 @@ const validateUserLogin = celebrate({
 });
 
 const validateId = celebrate({
-  params: Joi.object().keys({}),
+  params: Joi.object().keys({
+    _id: Joi.string().hex().length(24),
+  }),
 });
 
 const validateItemId = celebrate({
-  params: Joi.object()
-    .keys({
-      itemId: Joi.string().hex().length(24),
-      _id: Joi.string().hex().length(24),
-    })
-    .unknown(true),
+  params: Joi.object().keys({
+    itemId: Joi.string().hex().length(24),
+  }),
+  /* .unknown(true), */
 });
 
 module.exports = {

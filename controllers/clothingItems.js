@@ -16,7 +16,7 @@ const createItem = (req, res) => {
     .catch((err) => {
       console.error(err);
       handleRepeatErrors(err, res, next);
-      /*if (err.name === "ValidationError") {
+      /* if (err.name === "ValidationError") {
         return res.status(error400.status).send({ message: error400.message });
       }
       if (err.name === "DocumentNotFoundError") {
@@ -92,7 +92,7 @@ const deleteItem = (req, res) => {
     .catch((err) => {
       console.error(err);
       handleRepeatErrors(err, res, next);
-      /*if (err.name === "CastError") {
+      /* if (err.name === "CastError") {
         return res.status(error400.status).send({ message: error400.message });
       }
       if (err.name === "DocumentNotFoundError") {
