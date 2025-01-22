@@ -27,7 +27,7 @@ function handleRepeatErrors(err, res, next) {
   if (err.message.includes("Incorrect email or password")) {
     next(new UnauthorizedError(err.message));
   }
-  next(err);
+  return next(err);
 }
 
 module.exports = { errorHandler, handleRepeatErrors };

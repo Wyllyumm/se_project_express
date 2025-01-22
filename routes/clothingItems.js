@@ -10,7 +10,6 @@ const { auth } = require("../middlewares/auth");
 const {
   validateCreateClothingItem,
   validateItemId,
-  validateId,
 } = require("../middlewares/validation");
 
 router.get("/", getItems);
