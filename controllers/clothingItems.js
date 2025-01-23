@@ -13,10 +13,6 @@ const createItem = (req, res, next) => {
     .then((item) => {
       res.status(201).send({ data: item });
     })
-    /*.catch((err) => {
-      console.error(err);
-      next(new InternalServerError(err.message));
-    })*/
     .catch((err) => {
       console.error(err);
       handleRepeatErrors(err, res, next);
