@@ -28,7 +28,11 @@ mongoose
   .catch((e) => console.error(e));
 
 app.use(express.json());
-app.use(cors("AllowAllOrigins"));
+app.use(
+  cors({
+    origin: ["https://idk-wtwr.mindhackers.org"],
+  })
+);
 app.use(limiter);
 app.use(requestLogger);
 
