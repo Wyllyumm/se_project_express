@@ -14,7 +14,7 @@ const app = express();
 const corsOptions = {
   origin: "https://idk-wtwr.mindhackers.org/",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  allowedHeaders: ["Content-Type", authorization],
 };
 const { PORT = 3001 } = process.env;
 mongoose
@@ -28,11 +28,7 @@ mongoose
   .catch((e) => console.error(e));
 
 app.use(express.json());
-app.use(
-  cors({
-    origin: ["https://idk-wtwr.mindhackers.org"],
-  })
-);
+app.use(cors(corsOptions));
 app.use(limiter);
 app.use(requestLogger);
 
