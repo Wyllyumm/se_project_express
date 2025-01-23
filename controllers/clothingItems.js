@@ -24,7 +24,7 @@ const getItems = (req, res, next) => {
     .then((items) => res.status(200).send(items))
     .catch((err) => {
       console.error(err);
-      next(new InternalServerError(err.message));
+      return next(new InternalServerError(err.message));
       /* the only error that would occur */
     });
 };
@@ -71,7 +71,7 @@ const deleteItem = (req, res, next) => {
         .then(() => res.status(200).send({ message: "Item Deleted" }))
         .catch((err) => {
           console.error(err);
-          next(new InternalServerError(err.message));
+          return next(new InternalServerError(err.message));
         });
     })
 
