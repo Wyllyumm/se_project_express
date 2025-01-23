@@ -7,14 +7,13 @@ const limiter = rateLimit({
   statusCode: 429,
   standardHeaders: true, // add the `RateLimit-*` headers to the response
   legacyHeaders: false, // remove the `X-RateLimit-*` headers from the response
-  onLimitReached: (err, req, res, next) => {
+  onLimitReached: (err, req, res, next, options) => {
     console.error(err);
     const { statusCode = 429 } = err;
-    res
-      .status(statusCode)
-      .send({
-        message: "Too many requests from, this IP, please try again later.",
-      });
+    res.status(statusCode).send({
+      message: "Too many requests from, this IP, please try again later.",
+    });
+    return next(err);
   },
 });
 
