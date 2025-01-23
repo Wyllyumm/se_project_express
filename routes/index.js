@@ -14,7 +14,7 @@ router.use("/items", itemRouter);
 router.post("/signup", validateUserSignup, createUser);
 router.post("/signin", validateUserLogin, login);
 
-router.use((req, res) => {
+router.use(() => {
   /* res.status(error404.status).send({ message: "Router not found" }); */
   throw new NotFoundError("Router not found");
 });

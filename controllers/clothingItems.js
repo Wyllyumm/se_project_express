@@ -18,7 +18,7 @@ const createItem = (req, res, next) => {
       console.error(err);
       /* return res.status(error500.status).send({ message: error500.message });
       throw new internalServerError(); */
-      next(new internalServerError("error.message"));
+      next(new internalServerError(err.message));
     })
     .catch((err) => {
       console.error(err);
@@ -31,8 +31,7 @@ const getItems = (req, res) => {
     .then((items) => res.status(200).send(items))
     .catch((err) => {
       console.error(err);
-
-      return res.status(error500.status).send({ message: error500.message });
+      next(new internalServerError(err.message));
       /* the only error that would occur */
     });
 };
@@ -79,7 +78,7 @@ const deleteItem = (req, res, next) => {
         .then(() => res.status(200).send({ message: "Item Deleted" }))
         .catch((err) => {
           console.error(err);
-          next(new internalServerError("error.message"));
+          next(new internalServerError(err.message));
         });
     })
 

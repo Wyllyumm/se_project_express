@@ -43,7 +43,7 @@ const createUser = (req, res, next) => {
           /* return res
             .status(error500.status)
             .send({ message: error500.message }); */
-          next(new internalServerError("error.message"));
+          next(new internalServerError(err.message));
         });
     })
     .catch((err) => {
