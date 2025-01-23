@@ -1,7 +1,6 @@
 const BadRequestError = require("../errors/badRequestError");
 const ConflictError = require("../errors/conflictError");
 const ForbiddenError = require("../errors/forbiddenError");
-const internalServerError = require("../errors/internalServerError");
 const NotFoundError = require("../errors/notFoundError");
 const UnauthorizedError = require("../errors/unauthorizedError");
 

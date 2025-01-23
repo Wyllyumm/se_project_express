@@ -1,5 +1,4 @@
 const ClothingItem = require("../models/clothingItem");
-const { error500 } = require("../utils/errors");
 const ForbiddenError = require("../errors/forbiddenError");
 const internalServerError = require("../errors/internalServerError");
 const { handleRepeatErrors } = require("../middlewares/error-handler");
@@ -26,7 +25,7 @@ const createItem = (req, res, next) => {
     });
 };
 
-const getItems = (req, res) => {
+const getItems = (req, res, next) => {
   ClothingItem.find({})
     .then((items) => res.status(200).send(items))
     .catch((err) => {

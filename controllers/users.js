@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const { JWT_SECRET } = require("../utils/config");
 
-const { error500 } = require("../utils/errors");
 const BadRequestError = require("../errors/badRequestError");
 const ConflictError = require("../errors/conflictError");
 const internalServerError = require("../errors/internalServerError");
