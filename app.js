@@ -12,7 +12,7 @@ const { limiter } = require("./middlewares/rateLimiter");
 
 const app = express();
 const corsOptions = {
-  origin: "https://idk-wtwr.mindhackers.org/",
+  origin: "https://idk-wtwr.mindhackers.org",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
@@ -30,7 +30,7 @@ mongoose
 app.use(express.json());
 app.use(cors(corsOptions));
 app.use(requestLogger);
-/* app.use(limiter); */
+app.use(limiter);
 
 app.get("/crash-test", () => {
   setTimeout(() => {
