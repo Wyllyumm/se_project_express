@@ -31,6 +31,7 @@ mongoose
 app.use(express.json());
 app.use(cors());
 app.use(limiter);
+app.options("*", cors());
 app.use(requestLogger);
 
 app.get("/crash-test", () => {
