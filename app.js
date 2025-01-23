@@ -11,11 +11,11 @@ const { requestLogger, errorLogger } = require("./middlewares/logger");
 const { limiter } = require("./middlewares/rateLimiter");
 
 const app = express();
-const corsOptions = {
+/* const corsOptions = {
   origin: "https://idk-wtwr.mindhackers.org/",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "authorization"],
-};
+}; */
 
 const { PORT = 3001 } = process.env;
 mongoose
@@ -29,7 +29,7 @@ mongoose
   .catch((e) => console.error(e));
 
 app.use(express.json());
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(limiter);
 app.use(requestLogger);
 
