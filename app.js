@@ -12,8 +12,8 @@ const { limiter } = require("./middlewares/rateLimiter");
 
 const app = express();
 const corsOptions = {
-  origin: false,
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 const { PORT = 3001 } = process.env;
