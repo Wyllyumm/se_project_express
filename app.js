@@ -23,13 +23,7 @@ mongoose
   .catch((e) => console.error(e));
 
 app.use(express.json());
-app.use(
-  cors({
-    origin: "https://idk-wtwr.mindhackers.org",
-    origin: "https://idk-wtwr.mindhackers.org/",
-    origin: "https://www.idk-wtwr.mindhackers.org",
-  })
-);
+app.use(cors());
 app.use(requestLogger);
 app.use(limiter);
 
