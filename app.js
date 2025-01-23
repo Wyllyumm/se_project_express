@@ -11,6 +11,11 @@ const { requestLogger, errorLogger } = require("./middlewares/logger");
 const { limiter } = require("./middlewares/rateLimiter");
 
 const app = express();
+const corsOptions = {
+  origin: "https://idk-wtwr.mindhackers.org/",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
 const { PORT = 3001 } = process.env;
 mongoose
   .connect("mongodb://127.0.0.1:27017/wtwr_db", {
@@ -23,7 +28,7 @@ mongoose
   .catch((e) => console.error(e));
 
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(requestLogger);
 app.use(limiter);
 
