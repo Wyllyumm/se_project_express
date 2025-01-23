@@ -6,6 +6,7 @@ const { JWT_SECRET } = require("../utils/config");
 const { error500 } = require("../utils/errors");
 const BadRequestError = require("../errors/badRequestError");
 const ConflictError = require("../errors/conflictError");
+const internalServerError = require("../errors/internalServerError");
 const { handleRepeatErrors } = require("../middlewares/error-handler");
 
 const createUser = (req, res, next) => {
@@ -39,9 +40,10 @@ const createUser = (req, res, next) => {
         )
         .catch((err) => {
           console.error(err);
-          return res
+          /* return res
             .status(error500.status)
-            .send({ message: error500.message });
+            .send({ message: error500.message }); */
+          next(new internalServerError("error.message"));
         });
     })
     .catch((err) => {
@@ -91,10 +93,6 @@ const updateProfile = (req, res, next) => {
     .orFail()
     .then((user) => {
       res.status(200).send(user);
-    })
-    .catch((err) => {
-      console.error(err);
-      return res.status(error500.status).send({ message: error500.message });
     })
     .catch((err) => {
       console.error(err);

@@ -13,9 +13,9 @@ const {
 } = require("../middlewares/validation");
 
 router.get("/", getItems);
-router.post("/", validateCreateClothingItem, auth, createItem);
-router.delete("/:itemId", validateItemId, auth, deleteItem);
-router.put("/:itemId/likes", validateItemId, auth, likeItem);
-router.delete("/:itemId/likes", validateItemId, auth, dislikeItem);
+router.post("/", auth, validateCreateClothingItem, createItem);
+router.delete("/:itemId", auth, validateItemId, deleteItem);
+router.put("/:itemId/likes", auth, validateItemId, likeItem);
+router.delete("/:itemId/likes", auth, validateItemId, dislikeItem);
 
 module.exports = router;

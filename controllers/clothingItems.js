@@ -1,6 +1,7 @@
 const ClothingItem = require("../models/clothingItem");
 const { error500 } = require("../utils/errors");
 const ForbiddenError = require("../errors/forbiddenError");
+const internalServerError = require("../errors/internalServerError");
 const { handleRepeatErrors } = require("../middlewares/error-handler");
 
 const createItem = (req, res, next) => {
@@ -15,7 +16,9 @@ const createItem = (req, res, next) => {
     })
     .catch((err) => {
       console.error(err);
-      return res.status(error500.status).send({ message: error500.message });
+      /* return res.status(error500.status).send({ message: error500.message });
+      throw new internalServerError(); */
+      next(new internalServerError("error.message"));
     })
     .catch((err) => {
       console.error(err);
@@ -76,9 +79,7 @@ const deleteItem = (req, res, next) => {
         .then(() => res.status(200).send({ message: "Item Deleted" }))
         .catch((err) => {
           console.error(err);
-          return res
-            .status(error500.status)
-            .send({ message: error500.message });
+          next(new internalServerError("error.message"));
         });
     })
 
