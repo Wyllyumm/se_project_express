@@ -12,7 +12,7 @@ const { limiter } = require("./middlewares/rateLimiter");
 
 const app = express();
 const corsOptions = {
-  origin: "*",
+  origin: "https://idk-wtwr.mindhackers.org/",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
