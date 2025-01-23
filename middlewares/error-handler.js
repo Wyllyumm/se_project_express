@@ -3,7 +3,7 @@ const ConflictError = require("../errors/conflictError");
 const ForbiddenError = require("../errors/forbiddenError");
 const NotFoundError = require("../errors/notFoundError");
 const UnauthorizedError = require("../errors/unauthorizedError");
-
+const InternalServerError = require("../errors/internalServerError");
 function errorHandler(err, req, res, next) {
   console.error(err);
   const { statusCode = 500 } = err;
@@ -27,6 +27,9 @@ function handleRepeatErrors(err, res, next) {
   }
   if (err.message.includes("Incorrect email or password")) {
     next(new UnauthorizedError(err.message));
+  }
+  if (err.name === "InternalServerError") {
+    next(new InternalServerError(err.message));
   }
   return next(err);
 }

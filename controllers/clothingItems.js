@@ -1,6 +1,6 @@
 const ClothingItem = require("../models/clothingItem");
 const ForbiddenError = require("../errors/forbiddenError");
-const internalServerError = require("../errors/internalServerError");
+const InternalServerError = require("../errors/internalServerError");
 const { handleRepeatErrors } = require("../middlewares/error-handler");
 
 const createItem = (req, res, next) => {
@@ -13,12 +13,10 @@ const createItem = (req, res, next) => {
     .then((item) => {
       res.status(201).send({ data: item });
     })
-    .catch((err) => {
+    /*.catch((err) => {
       console.error(err);
-      /* return res.status(error500.status).send({ message: error500.message });
-      throw new internalServerError(); */
-      next(new internalServerError(err.message));
-    })
+      next(new InternalServerError(err.message));
+    })*/
     .catch((err) => {
       console.error(err);
       handleRepeatErrors(err, res, next);
@@ -30,7 +28,7 @@ const getItems = (req, res, next) => {
     .then((items) => res.status(200).send(items))
     .catch((err) => {
       console.error(err);
-      next(new internalServerError(err.message));
+      next(new InternalServerError(err.message));
       /* the only error that would occur */
     });
 };
@@ -77,7 +75,7 @@ const deleteItem = (req, res, next) => {
         .then(() => res.status(200).send({ message: "Item Deleted" }))
         .catch((err) => {
           console.error(err);
-          next(new internalServerError(err.message));
+          next(new InternalServerError(err.message));
         });
     })
 

@@ -5,7 +5,7 @@ const { JWT_SECRET } = require("../utils/config");
 
 const BadRequestError = require("../errors/badRequestError");
 const ConflictError = require("../errors/conflictError");
-const internalServerError = require("../errors/internalServerError");
+const InternalServerError = require("../errors/internalServerError");
 const { handleRepeatErrors } = require("../middlewares/error-handler");
 
 const createUser = (req, res, next) => {
@@ -42,7 +42,7 @@ const createUser = (req, res, next) => {
           /* return res
             .status(error500.status)
             .send({ message: error500.message }); */
-          next(new internalServerError(err.message));
+          next(new InternalServerError(err.message));
         });
     })
     .catch((err) => {
